@@ -1,0 +1,69 @@
+service : {
+  "addTentativeDevice" : (record { user_number : nat; device_data : record {
+    pubkey : blob;
+    alias : text;
+    credential_id : opt blob;
+    purpose : variant { authentication; recovery };
+    key_type : variant { unknown; platform; cross_platform };
+    protection : variant { unprotected; protected };
+  } }) -> (variant { device_registration_mode : variant { off; on }; added_device : opt record { tentative_device_id : nat } });
+  "enterDeviceRegistrationMode" : (record { user_number : nat }) -> (variant { device_registration_mode : variant { on; off } });
+  "exitDeviceRegistrationMode" : (record { user_number : nat }) -> ();
+  "getAnchorInfo" : (record { user_number : nat }) -> (record { devices : vec record {
+    pubkey : blob;
+    alias : text;
+    credential_id : opt blob;
+    purpose : variant { authentication; recovery };
+    key_type : variant { unknown; platform; cross_platform };
+    protection : variant { unprotected; protected };
+    last_usage_timestamp : opt nat64;
+  } });
+  "getDelegation" : (record {
+    pubkey : blob;
+    timestamp : nat64;
+    frontend_hostname : text;
+    targets : opt vec principal;
+  }) -> (opt record {
+    delegation : record {
+      pubkey : blob;
+      expiration : nat64;
+      targets : opt vec principal;
+    };
+    signature : blob;
+  });
+  "get_principal" : () -> (principal);
+  "init_salt" : () -> ();
+  "lookup" : (record { user_number : nat }) -> (opt principal);
+  "register" : (record { device_data : record {
+    pubkey : blob;
+    alias : text;
+    credential_id : opt blob;
+    purpose : variant { authentication; recovery };
+    key_type : variant { unknown; platform; cross_platform };
+    protection : variant { unprotected; protected };
+  } }) -> (record { user_number : nat });
+  "remove" : (record { user_number : nat }) -> ();
+  "removeDevice" : (record { user_number : nat; device_key : blob }) -> ();
+  "replaceDevice" : (record {
+    user_number : nat;
+    old_device : blob;
+    new_device : record {
+      pubkey : blob;
+      alias : text;
+      credential_id : opt blob;
+      purpose : variant { authentication; recovery };
+      key_type : variant { unknown; platform; cross_platform };
+      protection : variant { unprotected; protected };
+    };
+  }) -> ();
+  "stats" : () -> (record { users_registered : nat });
+  "tentativeDeviceRegistrationInfo" : (record { user_number : nat }) -> (variant { device_registration_mode : variant { off; on }; tentative_device : opt record {
+    pubkey : blob;
+    alias : text;
+    credential_id : opt blob;
+    purpose : variant { authentication; recovery };
+    key_type : variant { unknown; platform; cross_platform };
+    protection : variant { unprotected; protected };
+  } });
+  "verifyTentativeDevice" : (record { user_number : nat; verification_code : text }) -> (variant { verified; wrong_code; device_registration_mode_off; no_device_to_verify });
+}

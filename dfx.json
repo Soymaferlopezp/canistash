@@ -1,0 +1,33 @@
+{
+  "canisters": {
+    "canistash_backend": {
+      "main": "src/canistash_backend/main.mo",
+      "type": "motoko"
+    },
+
+    "internet_identity": {
+      "type": "custom",
+      "candid": "src/internet_identity/internet_identity.did",
+      "wasm": "src/internet_identity/internet_identity.wasm"
+    },
+
+    "canistash_frontend": {
+      "dependencies": [
+        "canistash_backend"
+      ],
+      "source": [
+        "src/canistash_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "canistash_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
