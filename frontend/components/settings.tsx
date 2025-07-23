@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
+import { useUser } from "@/hooks/useUser"
 import { Badge } from "@/components/ui/badge"
 import {
   SettingsIcon,
@@ -38,6 +39,8 @@ export default function Settings({ isDark, toggleTheme }: SettingsProps) {
     analytics: false,
     marketing: false,
   })
+
+  const { principalId } = useUser()
 
   const handleDownloadData = () => {
     console.log("Downloading user data...")
@@ -94,7 +97,10 @@ export default function Settings({ isDark, toggleTheme }: SettingsProps) {
             <div className="space-y-2">
               <Label className="text-sm font-medium text-card-foreground">Principal ID</Label>
               <div className="p-3 bg-muted/30 rounded-lg border border-border/20">
-                <p className="text-xs font-mono text-muted-foreground break-all">rdmx6-jaaaa-aaaah-qcaiq-cai</p>
+              <p className="text-xs font-mono text-muted-foreground break-all">
+                {principalId || "Loading..."}
+              </p>
+
               </div>
             </div>
             <div className="space-y-2">

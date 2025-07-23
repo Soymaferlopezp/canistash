@@ -1,5 +1,8 @@
 "use client"
 
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { AuthClient } from "@dfinity/auth-client"
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
@@ -44,7 +47,7 @@ export default function LandingPage() {
             </Button>
 
             {/* Internet Identity Login */}
-            <LoginButton />
+            <LoginButton onLoginSuccess={() => setIsLoggedIn(true)} />
 
             <Button variant="ghost" size="sm" onClick={toggleTheme} className="ml-2">
               {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -249,7 +252,7 @@ export default function LandingPage() {
 
           <div className="mt-8 pt-8 border-t border-border/40 text-center">
             <p className="text-sm text-muted-foreground">
-              © 2024 CANISTASH. Built on Internet Computer for maximum privacy and decentralization.
+              © 2025 CANISTASH. Built on Internet Computer for maximum privacy and decentralization.
             </p>
           </div>
         </div>
